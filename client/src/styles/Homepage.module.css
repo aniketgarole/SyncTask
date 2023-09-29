@@ -1,0 +1,155 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    border: 1px solid gray;
+    padding: 10px;
+    min-height: 9vh;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid red;
+    padding: 0px 5px;
+    position: relative;
+}
+
+.logo {
+    font-size: 1rem;
+}
+
+.welcome_note {
+    margin-right: 25px;
+}
+
+.hamburger_icon {
+    
+    border: none;
+}
+
+
+
+.menu {
+    position: absolute;
+    right: 0px;
+    bottom: -135px;
+    border: 1px solid blue;
+    padding: 5px;
+    
+}
+
+.transition_menu {
+    animation-name: popup;
+    animation-duration: 500ms;
+    animation-iteration-count: 1;
+    
+}
+
+.no_transition {
+    animation-name: popup_reverse;
+    animation-duration: 500ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    
+}
+
+@keyframes popup {
+    from {
+        transform: scale(0);
+        transform-origin: top right;
+    }
+
+    to {
+        transform: scale(1);
+        transform-origin: top right;
+    }
+}
+
+@keyframes popup_reverse {
+    from {
+        transform: scale(1);
+        transform-origin: top right;
+    }
+
+    to {
+        transform: scale(0);
+        transform-origin: top right;
+    }
+}
+
+
+
+
+
+.menu ul {
+    list-style-type: none;
+
+}
+
+.menu ul li {
+    padding: 5px;
+}
+
+.logout_btn {
+    display: none
+}
+
+
+
+
+main {
+    
+    border: 1px solid green;
+    min-height: 78vh;
+    max-height: 78vh;
+
+}
+
+.sidebar {
+    display: none;
+
+}
+
+.tasksection {
+    height: 100%;
+}
+
+
+
+
+footer {
+    border: 1px solid black;
+    min-height: 13vh;
+    max-height: 13vh;
+
+}
+
+@media screen and (min-width: 768px) {
+    .hamburger_icon {
+        display: none;
+    }
+
+    .logout_btn {
+        display: inline
+    }
+
+    main {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    border: 1px solid green;
+    min-height: 78vh;
+    max-height: 78vh;
+
+    }
+
+    .sidebar {
+        display: block;
+        height: 100%;
+    }
+
+}
