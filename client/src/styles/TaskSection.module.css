@@ -1,4 +1,27 @@
 .tasksection_container {
     border: 1px solid red;
     height: 100%;
+    padding: 10px;
 }
+
+.create_task_btn {
+    margin-bottom: 14px;
+}
+
+.filter_day_header {
+    margin-bottom: 5px;
+    display: flex;
+    gap: 110px;
+    align-items: center;
+}
+
+.filter_day_header select {
+   font-size: 0.8rem;
+   padding: 0 4px ;
+   height: 20px;
+}
+
+ /* select option {
+    padding: 20px;
+    margin: 5px 0 5px 0;
+} */

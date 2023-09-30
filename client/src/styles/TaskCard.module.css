@@ -1,0 +1,24 @@
+.taskcard {
+    border-bottom: 1px solid gray;
+    padding: 10px 0;
+}
+
+.card_title_status {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.right_span {
+    display: inline-block;
+    margin-bottom: 8px;
+    margin-left: 30px;
+}
+
+.edit_btn {
+    margin-left: 10px;
+}
+
+.delete_btn {
+    margin-left: 10px;
+}

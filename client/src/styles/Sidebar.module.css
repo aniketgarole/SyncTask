@@ -1,4 +1,10 @@
 .sidebar_container {
     border: 1px solid black;
     height: 100%;
+    padding-left: 10px;
+}
+
+.sidebar_container ul li {
+    padding: 5px 0;
+    cursor: pointer;
 }
