@@ -1,5 +1,7 @@
 const express = require("express")
+const {format} = require("date-fns")
 const { TaskModel } = require("../models/tasks.model")
+const { formatter } = require("../utils/TimezoneConverter")
 
 const tasksRouter = express.Router()
 
@@ -8,7 +10,15 @@ tasksRouter.get("/", async (req, res) => {
     try {
         const {userId} = req.body
         const tasks = await TaskModel.find({userId})
-        res.status(200).json({"tasks": tasks})
+        const regularTasks = tasks.map((task) => Object.assign({}, task._doc))
+        const formatted_tasks = regularTasks.map((task) => {
+            formatted_due_date = format(task.due_date, "PPpp")
+            formatted_created_task = format(task.created_at, "PPpp")
+            let {userId, ...rest} = task
+            console.log(rest)
+            return {...rest, created_at: formatted_created_task, due_date: formatted_due_date}
+        })
+        res.status(200).json({"tasks": formatted_tasks})
     } catch (error) {
         console.log(error.message)
         res.status(400).json({"mssg": error.message})
@@ -19,7 +29,11 @@ tasksRouter.get("/", async (req, res) => {
 
 tasksRouter.post("/create", async (req, res) => {
     try {
-        const newTask = new TaskModel({...req.body})
+       
+        let timeOfCreation = new Date()
+
+        const formattedDate = formatter.format(timeOfCreation)
+        const newTask = new TaskModel({...req.body, created_at: formattedDate})
         await newTask.save()
         res.status(201).json({"msg": "New task has been created!"})
     } catch (error) {
