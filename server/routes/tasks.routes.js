@@ -9,22 +9,53 @@ const tasksRouter = express.Router()
 tasksRouter.get("/", async (req, res) => {
     try {
         const {userId} = req.body
-        const tasks = await TaskModel.find({userId})
+        const {page} = req.body
+        const tasks =  page ? await TaskModel.find({userId}).limit(5).skip(5*(page-1)) : await TaskModel.find({userId})
+        // console.log(tasks)
+        const totalTasks = await TaskModel.countDocuments({userId})
+        const totalPages = Math.ceil(totalTasks/5)
         const regularTasks = tasks.map((task) => Object.assign({}, task._doc))
         const formatted_tasks = regularTasks.map((task) => {
             formatted_due_date = format(task.due_date, "PPpp")
             formatted_created_task = format(task.created_at, "PPpp")
             let {userId, ...rest} = task
-            console.log(rest)
+            // console.log(rest)
             return {...rest, created_at: formatted_created_task, due_date: formatted_due_date}
         })
-        res.status(200).json({"tasks": formatted_tasks})
+        res.status(200).json({"tasks": formatted_tasks, totalTasks, totalPages})
     } catch (error) {
         console.log(error.message)
         res.status(400).json({"mssg": error.message})
     }
 })
 
+
+tasksRouter.get("/duetoday", async(req, res) => {
+    try {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        const query = {
+            due_date: {
+              $gte: today,
+              $lt: tomorrow,
+            },
+          };
+
+          const tasksDueToday = await TaskModel.find(query);
+
+          res.status(200).json({tasks: tasksDueToday})
+
+      } catch (error) {
+        
+        res.status(400).json({"msg": error.message})
+
+        
+      }
+})
 
 
 tasksRouter.post("/create", async (req, res) => {
