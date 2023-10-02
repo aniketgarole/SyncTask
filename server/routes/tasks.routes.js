@@ -45,9 +45,106 @@ tasksRouter.get("/duetoday", async(req, res) => {
             },
           };
 
-          const tasksDueToday = await TaskModel.find(query);
+            const {userId} = req.body
+            const {page} = req.body
+            const tasks =  page ? await TaskModel.find({userId, ...query}).limit(5).skip(5*(page-1)) : await TaskModel.find({userId, ...query})
+            // console.log(tasks)
+            const totalTasks = await TaskModel.countDocuments({userId, ...query})
+            const totalPages = Math.ceil(totalTasks/5)
+            const regularTasks = tasks.map((task) => Object.assign({}, task._doc))
+            const formatted_tasks = regularTasks.map((task) => {
+                formatted_due_date = format(task.due_date, "PPpp")
+                formatted_created_task = format(task.created_at, "PPpp")
+                let {userId, ...rest} = task
+                // console.log(rest)
+                return {...rest, created_at: formatted_created_task, due_date: formatted_due_date}
+            })
+            res.status(200).json({"tasks": formatted_tasks, totalTasks, totalPages})
 
-          res.status(200).json({tasks: tasksDueToday})
+      } catch (error) {
+        
+        res.status(400).json({"msg": error.message})
+
+        
+      }
+})
+
+
+
+tasksRouter.get("/duetomorrow", async(req, res) => {
+    try {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        const dayAfterTommrrow = new Date(tomorrow)
+        dayAfterTommrrow.setDate(dayAfterTommrrow.getDate() + 1)
+
+        const query = {
+            due_date: {
+              $gte: tomorrow,
+              $lt: dayAfterTommrrow,
+            },
+          };
+
+            const {userId} = req.body
+            const {page} = req.body
+            const tasks =  page ? await TaskModel.find({userId, ...query}).limit(5).skip(5*(page-1)) : await TaskModel.find({userId, ...query})
+            // console.log(tasks)
+            const totalTasks = await TaskModel.countDocuments({userId, ...query})
+            const totalPages = Math.ceil(totalTasks/5)
+            const regularTasks = tasks.map((task) => Object.assign({}, task._doc))
+            const formatted_tasks = regularTasks.map((task) => {
+                formatted_due_date = format(task.due_date, "PPpp")
+                formatted_created_task = format(task.created_at, "PPpp")
+                let {userId, ...rest} = task
+                // console.log(rest)
+                return {...rest, created_at: formatted_created_task, due_date: formatted_due_date}
+            })
+            res.status(200).json({"tasks": formatted_tasks, totalTasks, totalPages})
+
+      } catch (error) {
+        
+        res.status(400).json({"msg": error.message})
+
+        
+      }
+})
+
+
+
+tasksRouter.get("/nextsevendays", async(req, res) => {
+    try {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const nextsevendays = new Date(today);
+        nextsevendays.setDate(nextsevendays.getDate() + 8);
+
+        const query = {
+            due_date: {
+              $gte: today,
+              $lt: nextsevendays,
+            },
+          };
+
+            const {userId} = req.body
+            const {page} = req.body
+            const tasks =  page ? await TaskModel.find({userId, ...query}).limit(5).skip(5*(page-1)) : await TaskModel.find({userId, ...query})
+            // console.log(tasks)
+            const totalTasks = await TaskModel.countDocuments({userId, ...query})
+            const totalPages = Math.ceil(totalTasks/5)
+            const regularTasks = tasks.map((task) => Object.assign({}, task._doc))
+            const formatted_tasks = regularTasks.map((task) => {
+                formatted_due_date = format(task.due_date, "PPpp")
+                formatted_created_task = format(task.created_at, "PPpp")
+                let {userId, ...rest} = task
+                // console.log(rest)
+                return {...rest, created_at: formatted_created_task, due_date: formatted_due_date}
+            })
+            res.status(200).json({"tasks": formatted_tasks, totalTasks, totalPages})
 
       } catch (error) {
         
