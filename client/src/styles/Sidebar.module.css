@@ -7,4 +7,11 @@
 .sidebar_container ul li {
     padding: 5px 0;
     cursor: pointer;
+    border-bottom: 1px solid gray;
+    padding: 10px 0;
+}
+
+
+.sidebar_container ul li:hover {
+    background-color: rgb(243, 240, 240);
 }

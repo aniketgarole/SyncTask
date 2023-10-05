@@ -2,7 +2,16 @@
     border: 1px solid red;
     height: 100%;
     padding: 10px;
+    /* background-color: white; */
 }
+
+/* .tasksection_container_gray {
+    border: 1px solid red;
+    height: 100%;
+    padding: 10px;
+    background-color: gray;
+    
+} */
 
 .create_task_btn {
     margin-bottom: 14px;
@@ -21,7 +30,16 @@
    height: 20px;
 }
 
- /* select option {
-    padding: 20px;
-    margin: 5px 0 5px 0;
-} */
+.pagination_div {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    /* border: 1px solid blue; */
+    
+}
+
+button {
+    padding: 1px 2px
+}

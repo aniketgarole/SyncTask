@@ -1,0 +1,43 @@
+.modal_container_outer{
+    border: 1px solid black;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    /* transform: translate(-50%, -50%);  */
+    padding: 10px;
+    z-index: 1;
+    background-color: rgba(58, 57, 57, 0.822);
+}
+
+.modal_container{
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 70%;
+    height: 50vh;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    background-color: whitesmoke;
+}
+
+.task_form {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.task_label {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.task_desc {
+    resize: none;
+    overflow-y: both;
+    width: 80%;
+    
+}
+

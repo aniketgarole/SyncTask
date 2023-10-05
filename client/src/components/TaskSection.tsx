@@ -1,13 +1,16 @@
 
-import { useState } from "react"
+import { FormEventHandler, useState } from "react"
 import styles from "../styles/TaskSection.module.css"
 import TaskCard from "./TaskCard"
+import Modal from "./Modal"
 
 
 const TaskSection = () => {
 
   const [currentStatus, setCurrentStatus] = useState<string>("all")
+  const [ismodal, setIsmodal] = useState<boolean>(false)
   
+  // let tasksection_container = ismodal ? "tasksection_container_gray" : "tasksection_container_white"
 
   const tasks = [
     {
@@ -63,11 +66,16 @@ const TaskSection = () => {
     })
   }
 
+  const handleCreateTask = (e: FormEventHandler<HTMLFormElement>): void => {
+    e.preventDefault()
+    
+  }
+
 
 
   return (
     <div className={styles.tasksection_container}>
-      <button className={styles.create_task_btn}>Create a new task</button>
+      <button className={styles.create_task_btn} onClick={() => {setIsmodal(true)}}>Create a new task</button>
       <div className={styles.tasks_div}>
         <div className={styles.filter_day_header}>
           <h2>Today's Tasks</h2>
@@ -77,6 +85,8 @@ const TaskSection = () => {
             <option value="completed">Completed</option>
           </select>
         </div>
+
+        {ismodal ? <Modal handleCreateTask={handleCreateTask}/>: null}
         
         <div className={styles.all_tasks}>
           {
@@ -92,6 +102,11 @@ const TaskSection = () => {
             
           }
         </div>
+      </div>
+      <div className={styles.pagination_div}>
+          <button>Prev</button>
+          <span>2</span>
+          <button>Next</button>
       </div>
     </div>
   )
